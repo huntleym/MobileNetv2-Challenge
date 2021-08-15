@@ -23,22 +23,13 @@ base_model.trainable = False
 global_average_layer = tf.keras.layers.GlobalAveragePooling2D()
 
 #convert features to single prediction per data input
-# if the output of net contains numbers lower than epsilon (1e-12), l2 normalization won't work
 prediction_layer = tf.keras.layers.Dense(3000, activation='softmax', kernel_regularizer='l2'))
 
+# chain together model layers
 x = base_model.output
-x = tf.keras.layers.GlobalAveragePooling2D()(x)
+x = global_average_layer(x)
 outputs = prediction_layer(x)
 model = tf.keras.Model(base_model.input, outputs)
-
-# model = tf.keras.Sequential([
-#     base_model,
-#     global_average_layer,
-#     prediction_layer
-# ])
-
-#create final loss from l2 normalization of all trainable variables
-#final_loss = tf.reduce_mean(losses + 0.001 * tf.reduce_sum([ tf.nn.l2_loss(n) for n in tf.trainable_variables() if 'bias' not in n.name]))
 
 #compile model - fine-tuning optional
 base_learning_rate = 0.0001
