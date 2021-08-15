@@ -1,8 +1,11 @@
 # Dockerfile (blueprint for building Images), Image (template for running containers), Container (actual running process for projects)
 FROM python:3.8
 
-ADD mobilenetv2-challenge.py .
+WORKDIR /usr/src/app
+RUN mkdir -p /usr/src/app/model
 
-RUN pip install matplotlib numpy tensorflow
+COPY . .
 
-CMD [ "python", "./mobilenetv2-challenge.py"]
+RUN pip install --no-cache-dir -r requirements.txt
+
+CMD ["python", "mobilenetv2-challenge.py"]
