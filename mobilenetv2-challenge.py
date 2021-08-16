@@ -17,7 +17,7 @@ base_model = tf.keras.applications.MobileNetV2(input_shape=IMG_SHAPE,
 base_model.trainable = False
 
 #view model
-base_model.summary()
+#base_model.summary()
 
 #use GlobalAveragePooling2D to convert features to single xxxx-element vector
 global_average_layer = tf.keras.layers.GlobalAveragePooling2D()
@@ -41,3 +41,5 @@ model.summary()
 
 # save model and architecture to file
 model.save(save_model_name)
+
+print(os.getcwd())
